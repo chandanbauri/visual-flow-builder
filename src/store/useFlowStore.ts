@@ -68,7 +68,7 @@ const nodeHeight = 150;
 export const useFlowStore = create<FlowState>((set, get) => ({
     nodes: [
         {
-            id: 'start-node',
+            id: 'node_0',
             type: 'flowStep',
             position: { x: 250, y: 150 },
             data: {
@@ -170,10 +170,21 @@ export const useFlowStore = create<FlowState>((set, get) => ({
     setStartNode: (id) => {
         const { nodes, edges, autoLayout } = get();
 
-        const newNodes = nodes.map((node) => ({
-            ...node,
-            data: { ...node.data, isStartNode: node.id === id },
-        }));
+        const newNodes = nodes.map((node) => {
+            const isTarget = node.id === id;
+            const wasStart = node.data.isStartNode;
+            const currentLabel = node.data.label;
+
+            let nextLabel = currentLabel;
+            if (wasStart && !isTarget && (currentLabel === 'Start Node' || currentLabel === 'START')) {
+                nextLabel = 'Process Step';
+            }
+
+            return {
+                ...node,
+                data: { ...node.data, isStartNode: isTarget, label: nextLabel },
+            };
+        });
 
         const newEdges = edges.map((edge) => {
             if (edge.target === id) {
