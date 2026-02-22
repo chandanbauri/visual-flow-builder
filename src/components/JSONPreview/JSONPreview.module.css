@@ -1,0 +1,120 @@
+.container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    left: 80px;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 100;
+    max-width: calc(100vw - 48px);
+    background: rgba(5, 6, 11, 0.8);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+}
+
+.expanded {
+    height: 450px;
+}
+
+.header {
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.validStatus {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.invalidStatus {
+    background: rgba(244, 63, 94, 0.1);
+    color: var(--error);
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(244, 63, 94, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    opacity: 0.8;
+}
+
+.content {
+    height: calc(450px - 58px);
+    display: flex;
+    flex-direction: column;
+}
+
+.errorBanner {
+    background: rgba(244, 63, 94, 0.05);
+    padding: 12px 24px;
+    font-size: 0.8rem;
+    color: var(--error);
+    border-bottom: 1px solid rgba(244, 63, 94, 0.1);
+    font-weight: 500;
+}
+
+.toolbar {
+    display: flex;
+    gap: 12px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.toolBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    background: var(--surface-hover);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.toolBtn:hover {
+    background: var(--surface-elevated);
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+}
+
+.container pre {
+    flex: 1;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    font-size: 0.85rem !important;
+    padding: 24px !important;
+}
+
+@media (min-width: 1024px) {
+    .container {
+        left: 420px;
+    }
+}

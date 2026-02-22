@@ -1,0 +1,34 @@
+.edge {
+    stroke: var(--text-muted);
+    stroke-width: 2.5;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
+
+.selected {
+    stroke: var(--accent-primary);
+    stroke-width: 4;
+    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
+}
+
+.labelContainer {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-color);
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+.selected+.labelContainer {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+    background: var(--accent-primary);
+    color: white;
+    transform: translate(-50%, -50%) scale(1.1) !important;
+}
