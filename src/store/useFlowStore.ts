@@ -280,7 +280,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
                     description: n.description || '',
                     prompt: n.prompt || '',
                     nodeType: n.node_type || n.nodeType || 'llm',
-                    isStartNode: n.id === data.metadata?.start_node_id || i === 0,
+                    isStartNode: data.metadata?.start_node_id ? n.id === data.metadata.start_node_id : i === 0,
                 }
             }));
 

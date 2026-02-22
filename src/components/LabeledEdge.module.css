@@ -7,8 +7,10 @@
 
 .selected {
     stroke: var(--accent-primary);
-    stroke-width: 4;
-    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
+    stroke-width: 3;
+    filter: drop-shadow(0 0 12px var(--accent-primary));
+    stroke-dasharray: 10, 10;
+    animation: flow 1s linear infinite;
 }
 
 .labelContainer {

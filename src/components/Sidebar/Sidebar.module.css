@@ -98,16 +98,39 @@
     cursor: not-allowed;
 }
 
-.checkboxGroup {
+.statusBadge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    background: var(--surface-hover);
+    color: var(--text-muted);
+    border-radius: 20px;
+    align-self: flex-start;
+}
+
+.statusBadge.active {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.toggleWrapper {
     display: flex;
     align-items: center;
+    gap: 10px;
+}
+
+.checkboxGroup {
+    display: flex;
+    flex-direction: column;
     gap: 12px;
-    margin-bottom: 24px;
     padding: 16px;
-    background: rgba(16, 185, 129, 0.05);
-    border: 1px solid rgba(16, 185, 129, 0.1);
-    border-radius: 16px;
-    cursor: pointer;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 24px;
 }
 
 .checkboxGroup input[type="checkbox"] {

@@ -90,12 +90,15 @@ export function JSONPreview() {
             <div className={styles.header} onClick={() => setIsExpanded(!isExpanded)}>
                 <div className={styles.status}>
                     {Object.keys(errors).length === 0 ? (
-                        <span className={styles.validStatus}>Schema Valid</span>
+                        <span className={styles.validStatus}>Deployment Ready</span>
                     ) : (
-                        <span className={styles.invalidStatus}><AlertCircle size={14} /> {nodeErrorCount + (hasGlobalErrors ? 1 : 0)} Issues found</span>
+                        <span className={styles.invalidStatus}>
+                            <AlertCircle size={14} />
+                            {nodeErrorCount + (hasGlobalErrors ? 1 : 0)} Logic Issues
+                        </span>
                     )}
                 </div>
-                <div className={styles.title}>JSON Configuration</div>
+                <div className={styles.title}>Visual Script (JSON)</div>
                 <button className={styles.expandBtn}>
                     {isExpanded ? <ChevronDown size={20} /> : <ChevronUp size={20} />}
                 </button>

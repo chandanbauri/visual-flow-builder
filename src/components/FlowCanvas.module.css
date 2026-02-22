@@ -49,11 +49,20 @@
     gap: 12px;
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
-    padding: 8px 12px;
+    padding: 8px 16px;
     border-radius: 20px;
     border: 1px solid var(--border-color);
     margin: 20px;
     box-shadow: var(--shadow-lg);
+}
+
+.toolLabel {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 4px;
 }
 
 .buttonGroup {

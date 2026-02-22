@@ -101,13 +101,18 @@ export function Sidebar() {
                         </div>
 
                         <div className={styles.checkboxGroup}>
-                            <input
-                                type="checkbox"
-                                id="isStartNode"
-                                checked={selectedNode.data.isStartNode}
-                                onChange={(e) => e.target.checked && setStartNode(selectedNode.id)}
-                            />
-                            <label htmlFor="isStartNode">Starting Node</label>
+                            <div className={`${styles.statusBadge} ${selectedNode.data.isStartNode ? styles.active : ''}`}>
+                                {selectedNode.data.isStartNode ? 'Active Entry' : 'Standard Step'}
+                            </div>
+                            <div className={styles.toggleWrapper}>
+                                <input
+                                    type="checkbox"
+                                    id="isStartNode"
+                                    checked={selectedNode.data.isStartNode}
+                                    onChange={(e) => e.target.checked && setStartNode(selectedNode.id)}
+                                />
+                                <label htmlFor="isStartNode">Set as Start Step</label>
+                            </div>
                         </div>
 
                         <div className={styles.actions}>

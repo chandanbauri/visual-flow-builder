@@ -80,7 +80,7 @@ export function FlowCanvas() {
                                     description: n.description || '',
                                     prompt: n.prompt || '',
                                     nodeType: n.node_type || n.nodeType || 'llm',
-                                    isStartNode: n.id === data.metadata?.start_node_id || i === 0,
+                                    isStartNode: data.metadata?.start_node_id ? n.id === data.metadata.start_node_id : i === 0,
                                 }
                             }));
 
@@ -141,26 +141,27 @@ export function FlowCanvas() {
                 />
 
                 <Panel position="top-right" className={styles.panel}>
+                    <div className={styles.toolLabel}>Add New Step:</div>
                     <div className={styles.buttonGroup}>
-                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'llm')} title="Add LLM">
+                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'llm')} title="AI Logic">
                             <Cpu size={18} />
                         </button>
-                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'source')} title="Add Source">
+                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'source')} title="Database">
                             <Database size={18} />
                         </button>
-                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'knowledge')} title="Add Knowledge">
+                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'knowledge')} title="Knowledge">
                             <Share2 size={18} />
                         </button>
-                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'condition')} title="Add Condition">
+                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'condition')} title="Branch">
                             <GitBranch size={18} />
                         </button>
-                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'input')} title="Add Input">
+                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'input')} title="Entry">
                             <LogIn size={18} />
                         </button>
-                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'output')} title="Add Output">
+                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'output')} title="Exit">
                             <LogOut size={18} />
                         </button>
-                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'filter')} title="Add Filter">
+                        <button className={styles.toolIconBtn} onClick={() => addNode({ x: 100, y: 100 }, 'filter')} title="Filter">
                             <Filter size={18} />
                         </button>
                     </div>
@@ -169,11 +170,11 @@ export function FlowCanvas() {
 
                     <button className={styles.secondaryBtn} onClick={onAutoLayout}>
                         <Layout size={18} />
-                        Auto Layout
+                        Organize Flow
                     </button>
                     <button className={styles.secondaryBtn} onClick={onImport}>
                         <Upload size={18} />
-                        Import
+                        Load File
                     </button>
                 </Panel>
             </ReactFlow>
