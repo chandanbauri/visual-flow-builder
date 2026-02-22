@@ -7,9 +7,12 @@ import 'prismjs/components/prism-json';
 import styles from './JSONPreview.module.css';
 
 export function JSONPreview() {
-    const { nodes, edges, validate, errors } = useFlowStore();
+    const { nodes, edges, validate, errors, loadFromJSON } = useFlowStore();
     const [isExpanded, setIsExpanded] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editValue, setEditValue] = useState('');
+    const [parseError, setParseError] = useState<string | null>(null);
 
     const flowJson = useMemo(() => {
         const formattedNodes = nodes.map(node => ({
@@ -42,8 +45,26 @@ export function JSONPreview() {
     }, [nodes, edges, validate]);
 
     useEffect(() => {
-        Prism.highlightAll();
-    }, [flowJson, isExpanded]);
+        if (!isEditing) {
+            setEditValue(flowJson);
+        }
+    }, [flowJson, isEditing]);
+
+    useEffect(() => {
+        if (!isEditing) {
+            Prism.highlightAll();
+        }
+    }, [flowJson, isExpanded, isEditing]);
+
+    const handleSave = () => {
+        const success = loadFromJSON(editValue);
+        if (success) {
+            setParseError(null);
+            setIsEditing(false);
+        } else {
+            setParseError('Invalid JSON structure or syntax error');
+        }
+    };
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(flowJson);
@@ -74,7 +95,7 @@ export function JSONPreview() {
                         <span className={styles.invalidStatus}><AlertCircle size={14} /> {nodeErrorCount + (hasGlobalErrors ? 1 : 0)} Issues found</span>
                     )}
                 </div>
-                <div className={styles.title}>JSON Preview</div>
+                <div className={styles.title}>JSON Configuration</div>
                 <button className={styles.expandBtn}>
                     {isExpanded ? <ChevronDown size={20} /> : <ChevronUp size={20} />}
                 </button>
@@ -82,13 +103,29 @@ export function JSONPreview() {
 
             {isExpanded && (
                 <div className={styles.content}>
-                    {hasGlobalErrors && (
+                    {(hasGlobalErrors || parseError) && (
                         <div className={styles.errorBanner}>
-                            {errors.global.map((err, i) => <div key={i}>{err}</div>)}
+                            {parseError && <div>{parseError}</div>}
+                            {errors.global?.map((err, i) => <div key={i}>{err}</div>)}
                         </div>
                     )}
 
                     <div className={styles.toolbar}>
+                        <button
+                            onClick={() => setIsEditing(!isEditing)}
+                            className={`${styles.toolBtn} ${isEditing ? styles.active : ''}`}
+                        >
+                            {isEditing ? 'Cancel Edit' : 'Edit JSON'}
+                        </button>
+
+                        {isEditing && (
+                            <button onClick={handleSave} className={`${styles.toolBtn} ${styles.active}`}>
+                                Apply Changes
+                            </button>
+                        )}
+
+                        <div style={{ flex: 1 }} />
+
                         <button onClick={copyToClipboard} className={styles.toolBtn}>
                             {copied ? 'Copied' : 'Copy'}
                         </button>
@@ -98,11 +135,20 @@ export function JSONPreview() {
                         </button>
                     </div>
 
-                    <pre className="language-json">
-                        <code className="language-json">
-                            {flowJson}
-                        </code>
-                    </pre>
+                    {isEditing ? (
+                        <textarea
+                            className={styles.jsonEditor}
+                            value={editValue}
+                            onChange={(e) => setEditValue(e.target.value)}
+                            spellCheck={false}
+                        />
+                    ) : (
+                        <pre className="language-json">
+                            <code className="language-json">
+                                {flowJson}
+                            </code>
+                        </pre>
+                    )}
                 </div>
             )}
         </div>

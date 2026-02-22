@@ -56,6 +56,7 @@ interface FlowState {
     errors: Record<string, string[]>;
     validate: () => boolean;
     autoLayout: () => void;
+    loadFromJSON: (json: string) => boolean;
 }
 
 const dagreGraph = new dagre.graphlib.Graph();
@@ -263,5 +264,46 @@ export const useFlowStore = create<FlowState>((set, get) => ({
         });
 
         set({ nodes: newNodes });
+    },
+
+    loadFromJSON: (jsonString: string) => {
+        try {
+            const data = JSON.parse(jsonString);
+            if (!data.nodes) return false;
+
+            const newNodes: CustomNode[] = data.nodes.map((n: any, i: number) => ({
+                id: n.id,
+                type: 'flowStep',
+                position: { x: 100 + (i * 250) % 800, y: 100 + Math.floor(i / 3) * 200 },
+                data: {
+                    label: n.label || n.name || n.id,
+                    description: n.description || '',
+                    prompt: n.prompt || '',
+                    nodeType: n.node_type || n.nodeType || 'llm',
+                    isStartNode: n.id === data.metadata?.start_node_id || i === 0,
+                }
+            }));
+
+            const newEdges: Edge[] = [];
+            data.nodes.forEach((n: any) => {
+                if (n.edges) {
+                    n.edges.forEach((e: any) => {
+                        newEdges.push({
+                            id: `e-${n.id}-${e.to_node_id}-${Date.now()}`,
+                            source: n.id,
+                            target: e.to_node_id,
+                            label: e.condition || 'Transition',
+                            type: 'labeled',
+                        });
+                    });
+                }
+            });
+
+            set({ nodes: newNodes, edges: newEdges });
+            get().autoLayout();
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 }));

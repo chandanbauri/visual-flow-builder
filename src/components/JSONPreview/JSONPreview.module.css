@@ -104,13 +104,28 @@
     transform: translateY(-1px);
 }
 
-.container pre {
+.container pre,
+.jsonEditor {
     flex: 1;
     margin: 0 !important;
     border-radius: 0 !important;
     background: rgba(0, 0, 0, 0.3) !important;
     font-size: 0.85rem !important;
     padding: 24px !important;
+}
+
+.jsonEditor {
+    border: none;
+    color: var(--accent-secondary);
+    font-family: 'Fira Code', 'Courier New', monospace;
+    resize: none;
+    outline: none;
+    line-height: 1.6;
+}
+
+.active {
+    background: var(--accent-primary) !important;
+    border-color: var(--accent-primary) !important;
 }
 
 @media (min-width: 1024px) {
